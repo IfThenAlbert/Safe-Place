@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".homeScreen">
+
+    <ImageView
+        android:id="@+id/img_desgin1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/pathtwo" />
+
+    <LinearLayout
+        android:id="@+id/home_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Hello First L"
+                android:textColor="#201E1E"
+                android:textSize="28sp" />
+
+            <ImageButton
+                android:id="@+id/img_btn_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:onClick="checkMyInfo"
+                app:srcCompat="@drawable/info_button" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_emergency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="sendEmergencyAlert"
+            android:text="SEND EMERGENCY"
+            android:textSize="24sp"
+            app:backgroundTint="#FF7D7D" />
+
+        <Button
+            android:id="@+id/btn_friends"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="friendsButton"
+            android:text="FRIENDS"
+            android:textSize="24sp"
+            app:backgroundTint="#2D4059" />
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="logMeOut"
+            android:text="LOGOUT"
+            android:textSize="24sp"
+            app:backgroundTint="#2D4059" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please give the app permissions to read your contacts and to send sms and also to view your location" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
