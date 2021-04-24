@@ -9,6 +9,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -46,6 +47,7 @@ public class homeScreen extends AppCompatActivity {
     private String lastKnownLocation;
     private FusedLocationProviderClient fusedClient;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,7 @@ public class homeScreen extends AppCompatActivity {
             startActivity(goHome);
             return;
         } else {
+
             TextView tvUser = (TextView) findViewById(R.id.txtUser);
             tvUser.setText("Hello " + current.get("firstname").toString());
         };
@@ -73,7 +76,13 @@ public class homeScreen extends AppCompatActivity {
                     (checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) &&
                     (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&
                     (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-                isEverythingOk = true;
+                LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+                if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    isEverythingOk = true;
+                }else{
+                    Toast.makeText(getApplicationContext(),"Please enable your GPS/Location", Toast.LENGTH_LONG).show();
+                }
 
             } else {
                 requestPermissions(new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -90,7 +99,13 @@ public class homeScreen extends AppCompatActivity {
         if (requestCode == 280) {
             if ((grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED) &&
                     (grantResults[2] == PackageManager.PERMISSION_GRANTED)) {
-                isEverythingOk = true;
+                LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+                if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    isEverythingOk = true;
+                }else{
+                    Toast.makeText(getApplicationContext(),"Please enable your GPS/Location", Toast.LENGTH_LONG).show();
+                }
             } else {
                 Toast.makeText(getApplicationContext(), "can not use the app without letting the app access to your location and sms", Toast.LENGTH_LONG).show();
             };
@@ -143,7 +158,7 @@ public class homeScreen extends AppCompatActivity {
                 Geocoder possitionConverter = new Geocoder(getApplicationContext(), Locale.getDefault());
                 try {
                     List<Address> possibleAdds = possitionConverter.getFromLocation(location.getLatitude(),location.getLongitude(),3);
-                    if(possibleAdds.size() >= 1 ) {
+                    if(possibleAdds.size() > 1 ) {
                         if(possibleAdds.get(0).getAddressLine(0) !=null) {
                             lastKnownLocation = possibleAdds.get(0).getAddressLine(0);
                         }else{
@@ -153,7 +168,7 @@ public class homeScreen extends AppCompatActivity {
                         lastKnownLocation = "LAT: " + location.getLatitude() + "\nLONG: " + location.getLongitude();
                     };
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Message: " + e.getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -180,6 +195,23 @@ public class homeScreen extends AppCompatActivity {
             };
         });
     };
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        current = ParseUser.getCurrentUser();
+        lastKnownLocation = "";
+
+        if (current == null) {
+            Intent goHome = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(goHome);
+            return;
+        } else {
+            TextView tvUser = (TextView) findViewById(R.id.txtUser);
+            tvUser.setText("Hello " + current.get("firstname").toString());
+        };
+    }
 
     @Override
     public void onBackPressed() {

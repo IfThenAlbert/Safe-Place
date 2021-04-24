@@ -40,7 +40,7 @@ public class registerScreen extends AppCompatActivity {
             String npass = passV.getText().toString();
             String nphone=  phoneV.getText().toString();
 
-            if(nphone.length() == 9) {
+            if(nphone.length() == 10) {
                 ParseUser newOne = new ParseUser();
                 newOne.setEmail(nemail);
                 newOne.setUsername(nuname);
