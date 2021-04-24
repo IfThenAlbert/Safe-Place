@@ -12,8 +12,8 @@ public class SafeSpaceApplication extends Application {
         super.onCreate();
 
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("zM9YEL4wfUrIYoD0DLbPSvxykR7SQVe7eWCkNdP6")
-                .clientKey("NQGOUYFJubyfU4JftZwI5ydY2miMj8NSf69L8tER")
+                .applicationId("your app id")
+                .clientKey("client ")
                 .server("https://parseapi.back4app.com")
                 .build()
         );
